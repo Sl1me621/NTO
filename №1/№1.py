@@ -12,8 +12,8 @@ def distances(contour1, contour2):
     return distance
 
 
-my_photo = cv2.imread("images/e63f4c78-0756-48b2-91a1-dd249ec57684.png")
-img_grey =cv2.cvtColor(my_photo,cv2.COLOR_BGR2GRAY)
+my_photo = cv2.imread("№ss1/images/e63f4c78-0756-48b2-91a1-dd249ec57684.png")
+img_grey = cv2.cvtColor(my_photo,cv2.COLOR_BGR2GRAY)
 img_grey = cv2.Canny(my_photo,100,200)
 
 thresh = 100

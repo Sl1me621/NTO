@@ -48,4 +48,5 @@ def measure_distance(image) -> float:
             dist = np.sqrt((x1-x2)**2+(y1-y2)**2)
             if dist < min_dist:
                 min_dist = dist
+                min_dist = float(min_dist)           
     return min_dist
