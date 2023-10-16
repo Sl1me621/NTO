@@ -25,7 +25,7 @@ def measure_distance(image) -> float:
     contours = []
     cnt, hierarchy = cv2.findContours(thresh_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     for c in cnt:
-        if len(c)> 200:
+        if len(c)> 210:
             contours.append(c)
 
     contours = sorted(contours, key= cv2.contourArea,reverse=True)
