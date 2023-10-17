@@ -1,56 +1,51 @@
 m,n = map(int, input().split())
 a= list(map(int, input().split()))
-max = 0
-kol=0
-max_k=0
-rez = []
-for h in a:
-    if h> max:
-        max=h
-        ind = a.index(h) 
-a.pop(ind)                
-print('ind=',ind)
-print(a)
-for i in a:
-    if i == max:
-        kol+=1
-        k= max+1
-        rez.append(a.index(i))
-        a.pop(a.index(i))
-        a.append(k)
-for i in a:
-    if i == max:
-        max_k+=1
-if max_k==0:
-    max =0
-    for h in a:
-        if h> max:
-            max=h
-            ind = a.index(h) 
-    a.pop(ind)                
-print(max)                                          
-print(a)
-print('rez=',rez)                
-# k= 0
-# kol=0
-# max = 0
-# for h in a:
-#     if h> max:
-#         max=h
-#         ind = a.index(h) 
-# print('ind=',ind)        
-# for i in range(m):
-#     if a[i] == a[ind]:
-#         k= i+max
-#         kol+=1
-#         a.pop(i)
-#         a.pop(a[ind])
-#         a.append(k)
-#         m-=1
-# print('k=',k)
-# print('max=',max)
-# print('kol=',kol)          
-# print('a=',a)          
-          
+k=[]
+num=[]
+kol = len(k)
+rez= 0
+max_ =[]
+dup=[]
+b=[] 
+c=[]      
+while len(a)!=0 :
+    print('next')
+    print('a=',a)
+    print('max_=',max_)
+    print('dup=',dup)
+    print('num=',num)
+    print('rez=',rez    )
+    if len(dup)==1:
+        for i in max_:
+            if i != dup[0]:
+                b.append(i)
+        max_=b
+        b=[]        
+        max_.append(dup[0]+1)
+    if len(max_)!=1:
+        dup = [x for i, x in enumerate(max_) if i != max_.index(x)]
+        if len(dup)==1:
+                for j in max_:
+                    if j != dup[0]:
+                        c.append(i)
+                        max_=c
+                        c=[]
+                        max_.append(dup[0]+1)           
+    if len(max_)==1:
+            num=max_[0]            
+    max_.append(max(a))
+    k.append(max(a))
+    a.pop(a.index(max(a)))
+    print(a)
+    num=max_[0]
+    dup = [x for i, x in enumerate(max_) if i != max_.index(x)]
+    rez= num
+    print('max_=',max_)
+    for i in max_:
+        if i== 4:
+            break
+print(rez)
 
-                
+        
+                                                
+            
