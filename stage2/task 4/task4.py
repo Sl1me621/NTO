@@ -25,7 +25,7 @@ def findcolors_(img,colmin,colmax):
         k= 1
         return k
         time.sleep(1)    
-frame = cv2.imread('stage2/task 4/images/bac84567-18a3-42bf-9299-caa192417aa5.jpg')
+frame = cv2.imread('stage2/task 4/images/be974195-8189-4f0c-946f-25247883e9d2.jpg')
 # canny = cv2.Canny(frame,100,100)
 # gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 frame_line = frame
@@ -93,7 +93,43 @@ kub_1_7 = frame[375:525, 75:225]
 kub_1_8 = frame[375:525, 225:375]
 kub_1_9 = frame[375:525, 375:525]
 
-kub_2_1 = frame[75:225, 75:225]
+kub_2_1 = frame[120:240, 120:240]
+
+kub_2_1_1 = frame[165:225, 240:255]
+kub_2_1_2 = frame[240:255, 175:225]
+
+kub_2_2 = frame[120:240, 240:360]
+
+kub_2_2_1 = frame[240:255, 255:345]
+
+kub_2_3 = frame[120:240, 360:480]
+
+kub_2_3_1 = frame[165:225, 345:360]
+kub_2_3_2 = frame[240:255, 375:415]
+
+kub_2_4 = frame[240:360, 120:240]
+
+kub_2_4_1 = frame[255:345, 240:255]
+
+kub_2_5 = frame[240:360, 240:360]
+
+kub_2_6 = frame[240:360,360:480]
+
+kub_2_6_1 = frame[255:345, 345:360]
+
+kub_2_7 = frame[360:480,120:240]
+
+kub_2_7_1 = frame[345:360, 175:225]
+kub_2_7_2 = frame[375:415, 240:255]
+
+kub_2_8 = frame[360:480,240:360]
+
+kub_2_8_1 = frame[345:360, 255:345]
+
+kub_2_9 = frame[360:480,360:480]
+
+kub_2_9_1 = frame[375:415, 345:360]
+kub_2_9_2 = frame[345:360, 375:415]
 
 hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
 mask_green = cv2.inRange(hsv,(greenmin),(greenmax))
@@ -112,15 +148,36 @@ green = cv2.bitwise_and(frame,frame,mask=mask_green)
 gray = cv2.bitwise_and(frame,frame,mask=mask_gray)
 orange = cv2.bitwise_and(frame,frame,mask=mask_orange)
 red = cv2.bitwise_and(frame,frame,mask=mask_red)
-# cv2.imshow("kub1", kub_1_1)
-# cv2.imshow("kub2", kub_1_2)
-# cv2.imshow("kub3", kub_1_3)
-# cv2.imshow("kub4", kub_1_4)
-# cv2.imshow("kub5", kub_1_5)
-# cv2.imshow("kub6", kub_1_6)
-# cv2.imshow("kub7", kub_1_7)
-# cv2.imshow("kub8", kub_1_8)
-# cv2.imshow("kub9", kub_1_9)
+# cv2.imshow("kub1_1", kub_1_1)
+# cv2.imshow("kub1_2", kub_1_2)
+# cv2.imshow("kub1_3", kub_1_3)
+# cv2.imshow("kub1_4", kub_1_4)
+# cv2.imshow("kub1_5", kub_1_5)
+# cv2.imshow("kub1_6", kub_1_6)
+# cv2.imshow("kub1_7", kub_1_7)
+# cv2.imshow("kub1_8", kub_1_8)
+# cv2.imshow("kub1_9", kub_1_9)
+# cv2.imshow("kub2_1", kub_2_1)
+# cv2.imshow("kub2_1_1", kub_2_1_1)
+# cv2.imshow("kub2_1_2", kub_2_1_2)
+# cv2.imshow("kub2_2", kub_2_2)
+# cv2.imshow("kub2_2_1", kub_2_2_1)
+# cv2.imshow("kub2_3", kub_2_3)
+# cv2.imshow("kub2_3_1", kub_2_3_1)
+# cv2.imshow("kub2_3_2", kub_2_3_2)
+# cv2.imshow("kub2_4", kub_2_4)
+# cv2.imshow("kub2_4_1", kub_2_4_1)
+# cv2.imshow("kub2_5", kub_2_5)
+# cv2.imshow("kub2_6", kub_2_6)
+# cv2.imshow("kub2_6_1", kub_2_6_1)
+# cv2.imshow("kub2_7", kub_2_7)
+# cv2.imshow("kub2_7_1", kub_2_7_1)
+# cv2.imshow("kub2_7_2", kub_2_7_2)
+# cv2.imshow("kub2_8", kub_2_8)
+# cv2.imshow("kub2_8_1", kub_2_8_1)
+# cv2.imshow("kub2_9", kub_2_9)
+# cv2.imshow("kub2_9_1", kub_2_9_1)
+# cv2.imshow("kub2_9    _2", kub_2_9_2)
 # cv2.imshow('gray',gray)
 # cv2.imshow('green',green)
 # cv2.imshow('red',red)
