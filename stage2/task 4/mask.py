@@ -10,7 +10,7 @@ cv2.createTrackbar('maxb','result',0,255,nothing)
 cv2.createTrackbar('maxg','result',0,255,nothing)
 cv2.createTrackbar('maxr','result',0,255,nothing)
 while True:
-    frame = cv2.imread('stage2/task 4/images/64d2a777-cc7d-4d78-b34c-877fadd36c94.jpg')
+    frame = cv2.imread('stage2/task 4/images/91181553-fa2e-468c-9b25-ddfcfa5e76de.jpg')
     hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
     minb = cv2.getTrackbarPos('minb','result')
     ming = cv2.getTrackbarPos('ming','result')
