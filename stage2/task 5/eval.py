@@ -1,68 +1,102 @@
-# !/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import rospy
 from gs_flight import FlightController, CallbackEvent
 from gs_board import BoardManager
 
+rospy.init_node("flight_test_node") # инициализируем ноду в системе ROS
+home_point = [2, 0, 1] # задаем точку «дом»
+coordinates = [[2, 0, 1],
+[2, 0, 3],
+[1, 0, 4],
+[2, 0, 7],
+[3, 0, 6],
+[5, 0, 5],
+[6, 0, 4],
+[6, 0, 2],
+[1, 0, 2]
+] # создаем массив точек, по которым будет лететь
 
-rospy.init_node("flight_test_node")
+run = True # переменная отвечающая за работу программы, значение True программа
 
-home_point = [1, 0, 1] 
+position_number = 0 # счетчик пройденных точек
 
-coordinates = [
-    [1,0,2],
-    [2,0,3],
-    [1,0,4],
-    [2,0,7],
-    [3,0,6],
-    [5,0,5],
-    [6,0,4],
-    [6,0,2],
-    [1,0,2]
-]
-
-run = True
-position_number = 0 
-
-def callback(event):
+def callback(event): # функция обработки событий Автопилота
     global ap
     global run
     global coordinates
     global position_number
+    event = event.data # преобразуем сообщение ROS std_msgs/Int32 в Питоновский int
+    # если событие Автопилота ENGINES_STARTED( моторы заведены), то выполняем взлет
 
-    event = event.data
+    # иначе делаем проверку на другое событие Автопилота
     if event == CallbackEvent.ENGINES_STARTED:
-        print("engine started")
-        ap.takeoff()
+        print("engine started")# выводим на экран сообщение, что двигатели
+        ap.takeoff() # отдаем команду на взлет, как только она будет выполнена
+    #Автопилот сгенерирует событие TAKEOFF_COMPLETE (взлет завершен)
+    # если событие Автопилота TAKEOFF_COMPLETE (взлет завершен)
+    # то обнуляем счетчик точек и отдаем команду Автопилоту переместится в нулевую,→ точку из массива,
+    # иначе делаем проверку на другое событие Автопилота
     elif event == CallbackEvent.TAKEOFF_COMPLETE:
-        print("takeoff complete")
-        position_number = 0
-        ap.goToLocalPoint(coordinates[position_number][0], coordinates[position_number][1], coordinates[position_number][2])
-        # print((coordinates[position_number][0], coordinates[position_number][1], coordinates[position_number][2]))
+        print("takeoff complite") # выводим на экран сообщение, что взлет закончен
+        position_number = 0 # обнуляем счетчик точек
+        # отдаем Автопилоту команду на перемещение в нулевую точку,
+        # как только команда завершится
+        # Автопилот сгенерирует POINT_REACHED(точка достигнута)
+        ap.goToLocalPoint(coordinates[position_number][0],coordinates[position_number][1],coordinates[position_number][2])
+        # если событие Автопилота POINT_REACHED (точка достигнута),
+        # то отдаем команду на перемещение в следующую точку или
+        # отдаем команду на приземление
     elif event == CallbackEvent.POINT_REACHED:
-        print(f"point {position_number} reached")
-        position_number +=1
+        print("point {} reached".format(position_number)) 
+        position_number += 1 # наращиваем счетчик пройденных точек на 1
+        # делаем проверку: если количество пройденных точек меньше чем количество,→ точек
+        # в массиве со всеми точками, то выполняем перемещение в следующую точку,
+        # иначе делаем проверку: если количество пройденных точек равно количеству,→ точек
+        # в массиве со всеми точками, то выполняем перемещение в точку «Дом»,# иначе выполняем посадку
         if position_number < len(coordinates):
-            ap.goToLocalPoint(coordinates[position_number][0], coordinates[position_number][1], coordinates[position_number][2])
-            # print((coordinates[position_number][0], coordinates[position_number][1], coordinates[position_number][2]))
+            # перемещение в следующую точку
+            # как только команда завершится
+            # Автопилот сгенерирует POINT_REACHED(точка достигнута)
+            ap.goToLocalPoint(coordinates[position_number][0],
+            coordinates[position_number][1],
+            coordinates[position_number][2])
+
         elif position_number == len(coordinates):
-            ap.goToLocalPoint(home_point[0], home_point[1], home_point[2])
+            # перемещение в точку «Дом»
+            # как только команда завершится
+            # Автопилот сгенерирует POINT_REACHED(точка достигнута)
+            p.goToLocalPoint(home_point[0], home_point[1], home_point[2])
         else:
             ap.landing()
-            print('landing')
+            # если событие Автопилота равно COPTER_LANDED (совершена посадка),
+            # то прекращаем выполнение программы
+
     elif event == CallbackEvent.COPTER_LANDED:
-        print("program finished")
+        print("finish programm")
+        # устанавливаем переменную,
+        # отвечающую за работу программы в значение False - программа должна,→ прекратится
         run = False
 
+ # создаем объект класса получения бортовой информации
 board = BoardManager()
+ # создаем объект управления полета Автопилотом, передаем функцию обработки,→ событий,
+
+ # как только придет событие от Автопилота эта функция будет вызвана
 ap = FlightController(callback)
 
+ # переменная, отвечающая за однократное выполнения блока предстартовой подготовки.
 once = False
 
+ # цикл во время выполнение которого работает функция callback
+ # Этот цикл работает пока переменная run в значении True и пока ROS включен
 while not rospy.is_shutdown() and run:
+    # если плата Автопилота подключена к Raspberry и переменная once равна False,
+    # то выполняем предстартовую подготовку
     if board.runStatus() and not once:
         print("start programm")
+        # отдает команду Автопилоту выполнить предстартовую подготовку,
+        # как только она будет выполнена
+        # Автопилот сгенерирует событие ENGINES_STARTED (Двигатели заведены)
         ap.preflight()
+        # устанавливаем в True, чтобы больше не выполнять блок предстартовой,→ подготовки
         once = True
-    pass
+pass
