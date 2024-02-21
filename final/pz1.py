@@ -4,7 +4,7 @@
 import rospy
 from gs_flight import FlightController, CallbackEvent
 from gs_board import BoardManager
-from gs_module import CargoController
+from gs_module import ModuleLedController
 from time import sleep
 
 rospy.init_node("flight_test_node")
@@ -33,15 +33,15 @@ def callback(event):
         print("engine started")
         ap.takeoff()
     elif event == CallbackEvent.TAKEOFF_COMPLETE:
-        cargo.changeAllColor(0, 255, 0, 0) 
-        sleep(1) 
+        # ModuleLedController.changeAllColor(0, 255, 0, 0) 
+        # sleep(1) 
         print("takeoff complete")
         position_number = 0
         ap.goToLocalPoint(coordinates[position_number][0], coordinates[position_number][1], coordinates[position_number][2])
     elif event == CallbackEvent.POINT_REACHED:
         print(f"point {position_number} reached")
-        cargo.changeAllColor(0, 0, 255, 0) 
-        sleep(0.4)
+        # ModuleLedController.changeAllColor(0, 0, 255, 0) 
+        # sleep(0.4)
         position_number += 1
         if position_number < len(coordinates):
             ap.goToLocalPoint(coordinates[position_number][0], coordinates[position_number][1], coordinates[position_number][2])
